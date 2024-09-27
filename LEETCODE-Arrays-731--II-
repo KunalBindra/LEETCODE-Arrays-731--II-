@@ -1,0 +1,43 @@
+class MyCalendarTwo {
+    private List<int[]> doublebookings; 
+    private List<int[]> overallbookings;
+    public MyCalendarTwo() {
+        doublebookings =new ArrayList<>();
+        overallbookings=new ArrayList<>();
+    }
+        private boolean check(int s1,int e1,int s2,int e2)
+        {
+            return Math.max(s1,s2)<Math.min(e1,e2);
+        }
+
+        private int[] checkinterval (int s1,int e1,int s2,int e2)
+        {
+            return new int[]{Math.max(s1,s2),Math.min(e1,e2)};
+        }
+
+        
+    
+    
+    public boolean book(int start, int end) {
+        for(int[] region:doublebookings)
+        {
+            if(check(region[0],region[1],start,end)) return false;
+        }
+        for(int[] bookings:overallbookings)
+        {
+            if(check(bookings[0],bookings[1],start,end))
+            {
+                doublebookings.add(checkinterval(bookings[0],bookings[1],start,end));
+            }
+        }
+        overallbookings.add(new int[]{start,end});
+        return true;
+        
+    }
+}
+
+/**
+ * Your MyCalendarTwo object will be instantiated and called as such:
+ * MyCalendarTwo obj = new MyCalendarTwo();
+ * boolean param_1 = obj.book(start,end);
+ */
